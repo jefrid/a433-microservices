@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+  item-db:
+    image: mongo:3
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - app-db:/data/db
+
+  # Service untuk container item-app
+  item-app:
+    image: moon8/item-app:v1
+    depends_on:
+      - item-db
+    restart: always
+    ports:
+      - 80:8080
+
+# Bridge volume item-db
+volumes:
+  app-db:
